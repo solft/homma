@@ -60,7 +60,7 @@ export default {
         date: "170714",
       }
     ],
-    idols: ['iu', 'wjsn', 'lovelyz', 'ohmygirl', 'twice', 'gfriend', 'gugudan', 'blackpink', 'clc', 'fromis9', 'izone', 'april']
+    idols: ['iu', 'luda', 'seola', 'bona']
   })
 }
 </script>

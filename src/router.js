@@ -16,14 +16,16 @@ export default new Router({
       component: Home
     },
     {
-      path: '/list/iu',
+      path: '/list/:name',
       name: 'list',
-      component: List
+      component: List,
+      props: true
     },
     {
-      path: 'post',
+      path: '/post/:name/:id',
       name: 'post',
-      component: Post
+      component: Post,
+      props: true
     }
   ]
 })
