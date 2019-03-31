@@ -9,7 +9,7 @@
       <v-flex v-for="(post, index) in posts" :key="index" xs12 sm6 md4 lg3 xl2>
 
         <v-hover>
-          <v-card slot-scope="{ hover }" max-width="300" flat class="rounded-card ma-2">
+          <v-card slot-scope="{ hover }" max-width="300" flat class="rounded-card ma-2" router :to="`/post/${post.name}/${post._id}`">
             <v-img class="rounded-card" :lazy-src="post.photos[0]" :src="post.photos[0]" :aspect-ratio="0.618">
 
               <!-- hover 부분 -->
@@ -45,7 +45,10 @@
 
       </v-flex>
     </v-layout>
-
+    <v-layout class="mt-4" justify-center>
+      <v-pagination v-model="currentPage" @input="onPageChange" :length="pageSize" :total-visible="10"></v-pagination>
+    </v-layout>
+    
   </v-container>
 </template>
 
@@ -54,22 +57,25 @@ import { mapState, mapActions } from 'vuex'
 
  export default {
     data: () => ({
-      
+      currentPage: 1
     }),
     computed: mapState([
-      'posts'
+      'posts',
+      'pageSize'
     ]),
     methods: {
       ...mapActions([
-        'setPosts'
-      ])
+        'fetchData',
+        'fetchDataSize'
+      ]),
+      onPageChange() {
+        this.fetchData({ name: this.$route.params.name, page: this.currentPage })
+        this.$router.push({ query : { page: this.currentPage }})
+      }
     },
     mounted() {
-      this.setPosts({ name: this.$route.params.name })
-      //this.$store.dispatch('getPosts', { name: this.$route.params.name })
-    },
-    beforeDestroy() {
-      //this.reset()
+      this.fetchData({ name: this.$route.params.name, page: 1 })
+      this.fetchDataSize({ name: this.$route.params.name })
     }
   }
 </script>

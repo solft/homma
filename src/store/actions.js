@@ -1,15 +1,15 @@
-import Vue from 'vue'
-import axios from 'axios'
-import VueAxios from 'vue-axios'
 
-Vue.use(VueAxios, axios)
+import * as api from '../api'
 
 export default {
-  setPosts({ commit }, payload) {
-    axios.get(`http://localhost:4000/api/posts/read/${payload.name}`)
-      .then(response => response.data)
-      .then(posts => {
-        commit('setPosts', posts)
-      })
-  }
+  // data 가져오기
+  async fetchData({ commit }, payload) {
+    const response = await api.getPosts(payload)
+    commit('setPosts', response.data)
+  },
+
+  async fetchDataSize({ commit }, payload) {
+    const response = await api.fetchDataSize(payload.name)
+    commit('setPageSize', response.data)
+  },
 }

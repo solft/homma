@@ -13,6 +13,26 @@
         </v-toolbar-title>
       </router-link>
       <!-- 빈 공간 -->
+
+      <v-autocomplete
+        v-model="model"
+        :items="idols"
+        :loading="isLoading"
+        :search-input.sync="search"
+        chips
+        clearable
+        flat
+        class="mx-3"
+        hide-no-data
+        hide-details
+        hide-selected
+        label="idol search"
+        solo
+        @keyup.enter="searchIdol">
+
+      </v-autocomplete>
+
+      
       <v-spacer></v-spacer>
 
 
@@ -93,13 +113,24 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
       drawer: false,
       links: [
         { text: 'Home', route: '/' },
-      ]
+      ],
+      isLoading: false,
+      idols: ['bona', 'seola', 'iu', 'luda'],
+      model: null,
+      search: null
+    }
+  },
+  methods: {
+    searchIdol() {
+      this.$router.push({ name: 'list', params: { name: this.model }})
+      this.$router.go()
     }
   }
 }
